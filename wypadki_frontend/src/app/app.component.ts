@@ -25,6 +25,7 @@ export class AppComponent {
     this.auth.userAuthState.subscribe((val) => {
       this.isSignedIn = val;
     });
+    this.auth.setAuthState(this.token.isValidToken());
   }
   
   signOut() {

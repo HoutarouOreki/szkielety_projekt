@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TokenService } from '../../services/token.service';
 import { AuthStateService } from '../../services/auth-state.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -23,8 +23,8 @@ export class SignInComponent implements OnInit {
     private toastService: ToastService
   ) {
     this.loginForm = this.fb.group({
-      email: [],
-      password: [],
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
     });
   }
   ngOnInit() {
@@ -34,6 +34,10 @@ export class SignInComponent implements OnInit {
     }
   }
   onSubmit() {
+    if (this.loginForm.invalid) {
+      this.toastService.showToast("Błąd walidacji", "Popraw dane", EventTypes.Error);
+      return;
+    }
     this.authService.signin(this.loginForm.value).subscribe(
       (result) => {
         this.responseHandler(result);

@@ -12,14 +12,14 @@
             {{ errors?.error }}
         </div>
         <!-- Login -->
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" formControlName="email">
-        </div>
-        <div class="form-group">
-            <label>Hasło</label>
-            <input type="password" class="form-control" formControlName="password">
-        </div>
-        <button type="submit" class="btn btn-block btn-primary">Zaloguj</button>
+        <mat-form-field class="d-block">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field class="d-block">
+            <mat-label>Hasło</mat-label>
+            <input matInput type="password" formControlName="password">
+        </mat-form-field>
+        <button mat-flat-button type="submit" color="primary" class="d-block m-auto">Zaloguj</button>
     </form>
 </div>

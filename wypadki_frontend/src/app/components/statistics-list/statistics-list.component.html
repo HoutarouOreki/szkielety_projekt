@@ -1,4 +1,4 @@
-<a routerLink="/registerAccident"><button class="btn btn-success">Zarejestruj wypadek</button></a>
+<a routerLink="/registerAccident"><button mat-flat-button color="primary">Zarejestruj wypadek</button></a>
 <div *ngIf="allStatistics && displayedStatistics">
     <mat-paginator [length]="allStatistics?.length ?? 0" [pageSize]="pageSize" (page)="handlePageEvent($event)"
         showFirstLastButtons aria-label="Wybierz stronę">
