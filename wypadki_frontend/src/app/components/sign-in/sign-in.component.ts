@@ -27,7 +27,12 @@ export class SignInComponent implements OnInit {
       password: [],
     });
   }
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.token.isLoggedIn()) {
+      this.toastService.showToast("Logowanie", "Jesteś już zalogowany", EventTypes.Info);
+      this.router.navigate(['/']);
+    }
+  }
   onSubmit() {
     this.authService.signin(this.loginForm.value).subscribe(
       (result) => {
@@ -40,6 +45,7 @@ export class SignInComponent implements OnInit {
         this.authState.setAuthState(true);
         this.loginForm.reset();
         this.router.navigate(['/']);
+        this.toastService.showToast("Zalogowano", "", EventTypes.Success)
       }
     );
   }

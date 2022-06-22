@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { EventTypes } from 'src/app/models/event-types';
+import { ToastService } from 'src/app/services/toast.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './sign-up.component.html',
@@ -13,7 +15,8 @@ export class SignUpComponent implements OnInit {
   constructor(
     public router: Router,
     public fb: FormBuilder,
-    public authService: AuthService
+    public authService: AuthService,
+    private toastService: ToastService
   ) {
     this.registerForm = this.fb.group({
       name: [''],
@@ -34,6 +37,7 @@ export class SignUpComponent implements OnInit {
       () => {
         this.registerForm.reset();
         this.router.navigate(['signin']);
+        this.toastService.showToast("Zarejestrowano", "Możesz się zalogować", EventTypes.Success)
       }
     );
   }

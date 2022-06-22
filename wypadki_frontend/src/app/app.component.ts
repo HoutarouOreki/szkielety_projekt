@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { EventType, Router } from '@angular/router';
 import { TokenService } from './services/token.service';
 import { AuthStateService } from './services/auth-state.service';
+import { ToastService } from './services/toast.service';
+import { EventTypes } from './models/event-types';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,8 @@ export class AppComponent {
   constructor(
     private auth: AuthStateService,
     public router: Router,
-    public token: TokenService
+    public token: TokenService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -28,5 +31,6 @@ export class AppComponent {
     this.auth.setAuthState(false);
     this.token.removeToken();
     this.router.navigate(['signin']);
+    this.toastService.showToast("Wylogowano", "", EventTypes.Success)
   }
 }

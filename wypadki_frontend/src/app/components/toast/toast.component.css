@@ -1,15 +1,27 @@
 .success {
-    background-color: #198754;
+    background-color: green;
+    color: white;
 }
 
 .info {
-    background-color: #0d6efd;
+    background-color: darkblue;
+    color: white;
 }
 
 .warning {
-    background-color: #ffc107;
+    background-color: orange;
 }
 
 .error {
-    background-color: #dc3545;
+    background-color: rgb(150,0,0);
+    color: white;
+}
+
+.toast-header {
+    background-color: transparent;
+    color: inherit;
+}
+
+.toast-body {
+    background-color: rgba(255, 255, 255, 0.2);
 }
