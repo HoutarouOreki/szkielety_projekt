@@ -18,7 +18,7 @@ export class ToastService {
     this._toastEvents.next({
       message,
       title,
-      type: EventTypes.Success,
+      type: type,
     });
   }
 }

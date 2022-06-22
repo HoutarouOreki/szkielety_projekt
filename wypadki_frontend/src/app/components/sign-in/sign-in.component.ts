@@ -4,6 +4,8 @@ import { AuthService } from './../../services/auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TokenService } from '../../services/token.service';
 import { AuthStateService } from '../../services/auth-state.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { EventTypes } from 'src/app/models/event-types';
 @Component({
   selector: 'app-signin',
   templateUrl: './sign-in.component.html',
@@ -17,7 +19,8 @@ export class SignInComponent implements OnInit {
     public fb: FormBuilder,
     public authService: AuthService,
     private token: TokenService,
-    private authState: AuthStateService
+    private authState: AuthStateService,
+    private toastService: ToastService
   ) {
     this.loginForm = this.fb.group({
       email: [],
@@ -31,12 +34,12 @@ export class SignInComponent implements OnInit {
         this.responseHandler(result);
       },
       (error) => {
-        this.errors = error.error;
+        this.toastService.showToast("Błąd", "Logowanie się nie powiodło:\n" + error.error.error, EventTypes.Error)
       },
       () => {
         this.authState.setAuthState(true);
         this.loginForm.reset();
-        this.router.navigate(['profile']);
+        this.router.navigate(['/']);
       }
     );
   }

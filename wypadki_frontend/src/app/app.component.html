@@ -8,6 +8,15 @@
       <li class="nav-item">
         <a routerLink="registerAccident" class="nav-link">Zarejestruj wypadek</a>
       </li>
+      <li class="nav-item" *ngIf="!isSignedIn">
+        <a routerLink="signin" class="nav-link">Zaloguj się</a>
+      </li>
+      <li class="nav-item" *ngIf="!isSignedIn">
+        <a routerLink="signup" class="nav-link">Zarejestruj się</a>
+      </li>
+      <li class="nav-item" *ngIf="isSignedIn">
+        <a role="button" (click)="signOut()" class="nav-link">Wyloguj się</a>
+      </li>
     </div>
   </nav>
   <app-toaster></app-toaster>

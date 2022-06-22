@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
       },
       () => {
         this.registerForm.reset();
-        this.router.navigate(['login']);
+        this.router.navigate(['signin']);
       }
     );
   }

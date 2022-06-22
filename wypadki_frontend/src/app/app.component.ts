@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TokenService } from './services/token.service';
+import { AuthStateService } from './services/auth-state.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +11,22 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Wypadki w środkach oświatowych';
 
-  constructor() {}
+  isSignedIn!: boolean;
+  constructor(
+    private auth: AuthStateService,
+    public router: Router,
+    public token: TokenService
+  ) {}
+
+  ngOnInit() {
+    this.auth.userAuthState.subscribe((val) => {
+      this.isSignedIn = val;
+    });
+  }
+  
+  signOut() {
+    this.auth.setAuthState(false);
+    this.token.removeToken();
+    this.router.navigate(['signin']);
+  }
 }

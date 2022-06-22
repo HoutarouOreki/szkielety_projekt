@@ -29,7 +29,7 @@ export class TokenService {
   }
   payload(token: any) {
     const jwtPayload = token.split('.')[1];
-    return JSON.parse(Buffer.from(jwtPayload, 'base64').toString());
+    return JSON.parse(atob(jwtPayload));
   }
   // User state based on valid token
   isLoggedIn() {
