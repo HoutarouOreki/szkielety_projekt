@@ -7,6 +7,7 @@ import { IdNameModel } from '../models/id_name_model';
 
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { SubFieldsValues } from '../models/sub-fields';
 
 const apiUrl = "http://localhost:8000/api";
 const baseUlr = apiUrl + "/AccidentStatistics";
@@ -54,7 +55,7 @@ export class AccidentStatisticService {
     return this.http.get<AccidentStatisticDto[]>(baseUlr + '/find', { params });
   }
 
-  async makeReadable(dto: AccidentStatisticDto[]) : Promise<AccidentStatistic[]> {
+  async getSubfieldsValues(): Promise<SubFieldsValues> {
     const miejscaWypadkuReq = this.http.get<IdNameModel[]>(apiUrl + "/MiejsceWypadku");
     const przyczynyWypadkuReq = this.http.get<IdNameModel[]>(apiUrl + "/PrzyczynaWypadku");
     const rodzajeWypadkuReq = this.http.get<IdNameModel[]>(apiUrl + "/RodzajWypadku");
@@ -79,16 +80,29 @@ export class AccidentStatisticService {
       typyPodmiotu,
       wojewodztwa
     ] = await Promise.all(requests);
-    
+
+    let sfv = new SubFieldsValues;
+    sfv.miejscaWypadku = miejscaWypadku;
+    sfv.przyczynyWypadku = przyczynyWypadku;
+    sfv.rodzajeWypadku = rodzajeWypadku;
+    sfv.rodzajeZajec = rodzajeZajec;
+    sfv.typyPodmiotu = typyPodmiotu;
+    sfv.wojewodztwa = wojewodztwa;
+    return sfv;
+  }
+
+  async makeReadable(dto: AccidentStatisticDto[]): Promise<AccidentStatistic[]> {
+    let sfv = await this.getSubfieldsValues();
+
     return dto.map(dto => {
       let as = new AccidentStatistic();
       as.IdStatystyki = dto.IdStatystyki;
-      as.Wojewodztwo = wojewodztwa.find(x => x.Id == dto.IdTerytWojewodztwo)?.Name ?? "??";
-      as.TypPodmiotu = typyPodmiotu.find(x => x.Id == dto.IdTypPodmiotu)?.Name ?? "??";
-      as.RodzajWypadku = rodzajeWypadku.find(x => x.Id == dto.IdRodzajWypadku)?.Name ?? "??";
-      as.PrzyczynaWypadku = przyczynyWypadku.find(x => x.Id == dto.IdPrzyczynaWypadku)?.Name ?? "??";
-      as.MiejsceWypadku = miejscaWypadku.find(x => x.Id == dto.IdMiejsceWypadku)?.Name ?? "??";
-      as.RodzajZajec = rodzajeZajec.find(x => x.Id == dto.IdRodzajZajec)?.Name ?? "??";
+      as.Wojewodztwo = sfv.wojewodztwa.find(x => x.Id == dto.IdTerytWojewodztwo)?.Name ?? "??";
+      as.TypPodmiotu = sfv.typyPodmiotu.find(x => x.Id == dto.IdTypPodmiotu)?.Name ?? "??";
+      as.RodzajWypadku = sfv.rodzajeWypadku.find(x => x.Id == dto.IdRodzajWypadku)?.Name ?? "??";
+      as.PrzyczynaWypadku = sfv.przyczynyWypadku.find(x => x.Id == dto.IdPrzyczynaWypadku)?.Name ?? "??";
+      as.MiejsceWypadku = sfv.miejscaWypadku.find(x => x.Id == dto.IdMiejsceWypadku)?.Name ?? "??";
+      as.RodzajZajec = sfv.rodzajeZajec.find(x => x.Id == dto.IdRodzajZajec)?.Name ?? "??";
       as.LiczbaWypadkow = dto.LiczbaWypadkow;
       return as;
     });
