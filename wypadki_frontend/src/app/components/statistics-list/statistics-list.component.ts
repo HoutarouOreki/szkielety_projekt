@@ -37,14 +37,14 @@ export class StatisticsListComponent implements OnInit {
     private statisticsService: AccidentStatisticService,
     private toastService: ToastService
   ) {
+  }
+
+  ngOnInit(): void {
     this.statisticsService.getAll().subscribe(async res => {
       this.allStatistics = await this.statisticsService.makeReadable(res);
       this.toastService.showToast("Sukces", "Pobrano statystyki", EventTypes.Success);
       this.setDisplayedStatistics();
     });
-  }
-
-  ngOnInit(): void {
   }
 
   handlePageEvent(event: PageEvent) {
@@ -62,6 +62,6 @@ export class StatisticsListComponent implements OnInit {
       }
       this.displayedStatistics.push(this.allStatistics![i]);
     }
-    this.table!.renderRows();
+    this.table?.renderRows();
   }
 }

@@ -16,7 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
     ToastComponent,
     ToasterComponent,
     SignUpComponent,
-    SignInComponent
+    SignInComponent,
   ],
   imports: [
     BrowserModule,
