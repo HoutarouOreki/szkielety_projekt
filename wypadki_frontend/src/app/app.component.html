@@ -1,0 +1,17 @@
+<div>
+  <nav class="navbar navbar-expand navbar-dark bg-dark px-5">
+    <a href="#" class="navbar-brand">{{ title }}</a>
+    <div class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a routerLink="statistics" class="nav-link">Statystyki</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="registerAccident" class="nav-link">Zarejestruj wypadek</a>
+      </li>
+    </div>
+  </nav>
+  <app-toaster></app-toaster>
+  <div class="container mt-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<a routerLink="/registerAccident"><button class="btn btn-success">Zarejestruj wypadek</button></a>
+<div *ngIf="allStatistics && displayedStatistics">
+    <mat-paginator [length]="allStatistics?.length ?? 0" [pageSize]="pageSize" (page)="handlePageEvent($event)"
+        showFirstLastButtons aria-label="Wybierz stronę">
+    </mat-paginator>
+    <table mat-table [dataSource]="displayedStatistics">
+        <ng-container matColumnDef="IdStatystyki">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let statistic"> {{statistic.IdStatystyki}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Wojewodztwo">
+            <th mat-header-cell *matHeaderCellDef> Województwo </th>
+            <td mat-cell *matCellDef="let statistic"> {{statistic.Wojewodztwo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="TypPodmiotu">
+            <th mat-header-cell *matHeaderCellDef> Typ podmiotu </th>
+            <td mat-cell *matCellDef="let statistic"> {{statistic.TypPodmiotu}} </td>
+        </ng-container>
+        <ng-container matColumnDef="RodzajWypadku">
+            <th mat-header-cell *matHeaderCellDef> Rodzaj wypadku </th>
+            <td mat-cell *matCellDef="let statistic"> {{statistic.RodzajWypadku}} </td>
+        </ng-container>
+        <ng-container matColumnDef="PrzyczynaWypadku">
+            <th mat-header-cell *matHeaderCellDef> Przyczyna wypadku </th>
+            <td mat-cell *matCellDef="let statistic"> {{statistic.PrzyczynaWypadku}} </td>
+        </ng-container>
+        <ng-container matColumnDef="MiejsceWypadku">
+            <th mat-header-cell *matHeaderCellDef> Miejsce wypadku </th>
+            <td mat-cell *matCellDef="let statistic"> {{statistic.MiejsceWypadku}} </td>
+        </ng-container>
+        <ng-container matColumnDef="RodzajZajec">
+            <th mat-header-cell *matHeaderCellDef> Rodzaj zajęć </th>
+            <td mat-cell *matCellDef="let statistic"> {{statistic.RodzajZajec}} </td>
+        </ng-container>
+        <ng-container matColumnDef="LiczbaWypadkow">
+            <th mat-header-cell *matHeaderCellDef> Liczba wypadków </th>
+            <td mat-cell *matCellDef="let statistic" class="mg-3"> {{statistic.LiczbaWypadkow}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [length]="allStatistics?.length ?? 0" [pageSize]="pageSize" (page)="handlePageEvent($event)"
+        showFirstLastButtons aria-label="Wybierz stronę">
+    </mat-paginator>
+</div>
+<div class="text-center m-6" *ngIf="!allStatistics || !displayedStatistics">
+    Wczytywanie...
+    <mat-progress-bar class="m-3" mode="indeterminate"></mat-progress-bar>
+</div>
