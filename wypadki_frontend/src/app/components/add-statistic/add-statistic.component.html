@@ -1,1 +1,69 @@
-<p>add-statistic works!</p>
+<form *ngIf="sfv" [formGroup]="accidentFormGroup" (ngSubmit)="saveStatistic()">
+    <div class="row">
+        <mat-form-field class="col-lg-4 col-md-12 p-4" appearance="fill">
+            <mat-label>Wojewodztwo</mat-label>
+            <mat-select [(value)]="statistic.IdTerytWojewodztwo" formControlName="wojewodztwo" required>
+                <mat-option *ngFor="let x of sfv.wojewodztwa" [value]="x.Id">
+                    {{x.Name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-lg-4 col-md-12 p-4" appearance="fill">
+            <mat-label>Typ podmiotu</mat-label>
+            <mat-select [(value)]="statistic.IdTypPodmiotu" formControlName="typPodmiotu" required>
+                <mat-option *ngFor="let x of sfv.typyPodmiotu" [value]="x.Id">
+                    {{x.Name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-lg-4 col-md-12 p-4" appearance="fill">
+            <mat-label>Rodzaj wypadku</mat-label>
+            <mat-select [(value)]="statistic.IdRodzajWypadku" formControlName="rodzajWypadku" required>
+                <mat-option *ngFor="let x of sfv.rodzajeWypadku" [value]="x.Id">
+                    {{x.Name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field class="col-lg-6 col-md-12 p-4" appearance="fill">
+            <mat-label>Przyczyna wypadku</mat-label>
+            <mat-select [(value)]="statistic.IdPrzyczynaWypadku" formControlName="przyczynaWypadku" required>
+                <mat-option *ngFor="let x of sfv.przyczynyWypadku" [value]="x.Id">
+                    {{x.Name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-lg-6 col-md-12 p-4" appearance="fill">
+            <mat-label>Miejsce wypadku</mat-label>
+            <mat-select [(value)]="statistic.IdMiejsceWypadku" formControlName="miejsceWypadku" required>
+                <mat-option *ngFor="let miejsceWypadku of sfv.miejscaWypadku" [value]="miejsceWypadku.Id">
+                    {{miejsceWypadku.Name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field class="col-lg-6 col-md-12 p-4" appearance="fill">
+            <mat-label>Rodzaj zajęć</mat-label>
+            <mat-select [(value)]="statistic.IdRodzajZajec" formControlName="rodzajZajec" required>
+                <mat-option *ngFor="let x of sfv.rodzajeZajec" [value]="x.Id">
+                    {{x.Name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-lg-6 col-md-12 p-4" appearance="fill">
+            <mat-label>Ilość wypadków</mat-label>
+            <input matInput type="number" required min="1" [(ngModel)]="statistic.LiczbaWypadkow"
+                formControlName="liczbaWypadkow">
+            <mat-error *ngIf="accidentFormGroup.controls.liczbaWypadkow.invalid">Podaj dodatnią liczbę</mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <button class="btn btn-success" type="submit">Dodaj statystykę</button>
+    </div>
+</form>
+<div class="text-center m-6" *ngIf="!sfv">
+    Wczytywanie...
+    <mat-progress-bar class="m-3" mode="indeterminate"></mat-progress-bar>
+</div>

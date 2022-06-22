@@ -17,6 +17,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input'
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
     BrowserAnimationsModule,
     MatPaginatorModule,
     MatTableModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule
   ],
   providers: [
     {

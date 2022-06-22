@@ -125,8 +125,8 @@ class AccidentStatisticController extends Controller
         }
         $accidentStatistic["IdRodzajZajec"] = $request->IdRodzajZajec;
 
-        if (!($request->LiczbaWypadkow instanceof int)) {
-            return response("Musisz podać liczbę całkowitą liczby wypadków.")
+        if (!ctype_digit($request->LiczbaWypadkow ) || $request->LiczbaWypadkow <= 0) {
+            return response("Musisz podać liczbę całkowitą dodatnią liczby wypadków.")
                 ->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
         $accidentStatistic["LiczbaWypadkow"] = $request->LiczbaWypadkow;
