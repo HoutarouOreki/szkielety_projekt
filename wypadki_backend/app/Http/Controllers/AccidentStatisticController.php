@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccidentStatistic;
+use App\Models\MiejsceWypadku;
 use App\Models\PrzyczynaWypadku;
 use App\Models\RodzajWypadku;
+use App\Models\RodzajZajec;
 use App\Models\TypPodmiotu;
 use App\Models\Wojewodztwo;
 use Illuminate\Http\Request;
@@ -113,26 +115,30 @@ class AccidentStatisticController extends Controller
         }
         $accidentStatistic["IdPrzyczynaWypadku"] = $request->IdPrzyczynaWypadku;
 
-        if (PrzyczynaWypadku::query()->find($request->IdMiejsceWypadku) == null) {
+        if (MiejsceWypadku::query()->find($request->IdMiejsceWypadku) == null) {
             return response("Nie ma miejsca wypadku o id $request->IdMiejsceWypadku.")
                 ->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
         $accidentStatistic["IdMiejsceWypadku"] = $request->IdMiejsceWypadku;
 
-        if (PrzyczynaWypadku::query()->find($request->IdRodzajZajec) == null) {
+        if (RodzajZajec::query()->find($request->IdRodzajZajec) == null) {
             return response("Nie ma rodzaju zajęć o id $request->IdRodzajZajec.")
                 ->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
         $accidentStatistic["IdRodzajZajec"] = $request->IdRodzajZajec;
 
-        if (!ctype_digit($request->LiczbaWypadkow ) || $request->LiczbaWypadkow <= 0) {
-            return response("Musisz podać liczbę całkowitą dodatnią liczby wypadków.")
+        if (!is_int($request->LiczbaWypadkow)) {
+            return response("Musisz podać liczbę całkowitą liczby wypadków (dostano $request->LiczbaWypadkow).")
+                ->setStatusCode(Response::HTTP_BAD_REQUEST);
+        }
+        if (intval($request->LiczbaWypadkow) <= 0) {
+            return response("Musisz podać dodatnią liczbę całkowitą liczby wypadków.")
                 ->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
         $accidentStatistic["LiczbaWypadkow"] = $request->LiczbaWypadkow;
 
         $accidentStatistic->save();
-        return "Utworzono nową statystykę: \n$accidentStatistic";
+        return response("Utworzono nową statystykę: \n$accidentStatistic");
     }
 
     /**

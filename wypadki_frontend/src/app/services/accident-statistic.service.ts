@@ -28,7 +28,7 @@ export class AccidentStatisticService {
   }
 
   add(data: AccidentStatisticDto): Observable<any> {
-    return this.http.post(baseUlr, data);
+    return this.http.post(baseUlr, data, {responseType: 'text'});
   }
 
   getByData(data: AccidentStatisticDto): Observable<AccidentStatisticDto[]> {
